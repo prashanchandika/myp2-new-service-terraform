@@ -1,0 +1,23 @@
+vpc_id="vpc-0c2daed33f5159b69"
+vpc_cidr="172.32.0.0/16"
+private_cidrs=[
+    "172.32.5.0/24",
+    "172.32.1.0/24",
+    "172.32.3.0/24",
+]
+public_cidrs=[
+    "172.32.2.0/24",
+    "172.32.4.0/24",
+    "172.32.0.0/24",
+]
+vpc_public_subnet_ids=[
+    "subnet-0c17df1c4454fc035",
+    "subnet-0d93e2cdd39d04727",
+    "subnet-0faf8398ac648d1f0",
+]
+vpc_private_subnet_ids=[
+    "subnet-0b62dbde68802b7d7",
+    "subnet-0635c9f2ac07fd652",
+    "subnet-01871adbd2bfd7fb7",
+]
+
