@@ -92,10 +92,10 @@ variable "target_container_name" {
   type        = string
   default     = ""
 }
-variable "target_port" {
+variable "tg_port" {
   description = "The port to which the load balancer should route traffic. Defaults to the service_port."
   type        = string
-  default     = ""
+  default     = "80"
 }
 
 variable "register_in_service_discovery" {
@@ -249,7 +249,19 @@ variable "listener_protocol" {
   default     = ""
 }
 
+variable "env_variables"{
+  default = [
+        {
+          "name": "ENV1",
+          "value": "80"
+        },
+        {
+          "name": "ENV2",
+          "value": "xxxxx"
+        }
+      ]
 
+}
 
 
 

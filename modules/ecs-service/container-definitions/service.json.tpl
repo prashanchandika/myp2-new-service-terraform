@@ -5,6 +5,7 @@
     "memory": 200,
     "essential": true,
     "command": ${command},
+    "environment": ${env_variables},
     "portMappings": [
       {
         "containerPort": ${port},

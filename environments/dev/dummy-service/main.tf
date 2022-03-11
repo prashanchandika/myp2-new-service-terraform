@@ -38,6 +38,7 @@ module "ecs_service" {
   deployment_identifier = "dev"
   alb_arn = "${var.alb_arn}"
   tg_name = "${var.service_name}-tftg"
+  tg_port = "${var.tg_port}"
   service_port = "${var.service_port}"
   listener_protocol = "${var.listener_protocol}"
   vpc_id = data.terraform_remote_state.network.outputs.vpc["vpc_id"]
@@ -52,6 +53,7 @@ module "ecs_service" {
   service_role = "${var.service_role}"
   service_volumes = var.service_volumes
   ecs_cluster_id = "${var.ecs_cluster_id}"
+  env_variables = "${var.env_variables}"
 
   tags = "${var.tags}"
 }

@@ -40,7 +40,7 @@ resource "aws_alb_listener" "lis1" {
 # Target group
 resource "aws_alb_target_group" "tg1" {
   name        = "${var.tg_name}"
-  port        = "${var.service_port}"
+  port        = "${var.tg_port}"
   protocol    = "${var.listener_protocol}"
   target_type = "ip"
   vpc_id      = "${var.vpc_id}"
