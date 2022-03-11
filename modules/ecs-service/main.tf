@@ -19,6 +19,12 @@ resource "aws_ecs_service" "service1" {
     assign_public_ip = false
   }
 
+  lifecycle {
+    ignore_changes = [
+      capacity_provider_strategy
+    ]
+  }
+
 }
 
 

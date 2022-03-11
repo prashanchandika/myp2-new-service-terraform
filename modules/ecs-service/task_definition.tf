@@ -19,8 +19,8 @@ resource "aws_ecs_task_definition" "td1" {
   network_mode              = var.service_task_network_mode
 #  pid_mode                  = var.service_task_pid_mode
   requires_compatibilities  = ["FARGATE"]
-  cpu                       = 1024
-  memory                    = 2048
+  cpu                       = var.task_cpu
+  memory                    = var.task_memory
   task_role_arn             = var.ecsTaskExecutionRole_arn
   execution_role_arn        = var.ecsTaskExecutionRole_arn
 

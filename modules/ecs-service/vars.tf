@@ -6,12 +6,6 @@ variable "vpc_id" {
   description = "The ID of the VPC into which to deploy the service."
   type        = string
 }
-/* variable "subnet_ids" {
-  description = "The IDs of the subnets in which to create ENIs when the service task network mode is \"awsvpc\"."
-  type        = list(string)
-  default     = []
-} */
-
 
 variable "deployment_identifier" {
   description = "An identifier for this instantiation."
@@ -140,31 +134,6 @@ variable "service_discovery_container_port" {
   default     = ""
 }
 
-/* variable "associate_default_security_group" {
-  description = "Whether or not to create and associate a default security group for the tasks created by this service (\"yes\" or \"no\"). Defaults to \"yes\". Only applicable when service_task_network_mode is \"awsvpc\"."
-  type        = string
-  default     = "yes"
-} */
-/* variable "include_default_ingress_rule" {
-  description = "Whether or not to include the default ingress rule in the default security group for the tasks created by this service (\"yes\" or \"no\"). Defaults to \"yes\". Only applicable when service_task_network_mode is \"awsvpc\"."
-  type        = string
-  default     = "yes"
-} */
-/* variable "include_default_egress_rule" {
-  description = "Whether or not to include the default egress rule in the default security group for the tasks created by this service (\"yes\" or \"no\"). Defaults to \"yes\". Only applicable when service_task_network_mode is \"awsvpc\"."
-  type        = string
-  default     = "yes"
-} */
-/* variable "default_security_group_ingress_cidrs" {
-  description = "The CIDRs allowed access to containers when using the default security group."
-  type        = list(string)
-  default     = ["10.0.0.0/8"]
-} */
-/* variable "default_security_group_egress_cidrs" {
-  description = "The CIDRs accessible from containers when using the default security group."
-  type        = list(string)
-  default     = ["0.0.0.0/0"]
-} */
 
 variable "service_role" {
   description = "The ARN of the service task role to use."
@@ -177,26 +146,12 @@ variable "service_volumes" {
   default     = []
 }
 
-/* variable "scheduling_strategy" {
-  description = "The scheduling strategy to use for this service (\"REPLICA\" or \"DAEMON\")."
-  type        = string
-  default     = "REPLICA"
-} */
-
-/* variable "placement_constraints" {
-  description = "A list of placement constraints for the service."
-  type        = list(map(string))
-  default     = []
-} */
 
 variable "ecs_cluster_id" {
   description = "The ID of the ECS cluster in which to deploy the service."
   type        = string
 }
-/* variable "ecs_cluster_service_role_arn" {
-  description = "The ARN of the IAM role to provide to ECS to manage the service."
-  type        = string
-} */
+
 
 variable "ecsTaskExecutionRole_arn" {
   description = "The ARN of the IAM role to provide to ECS to manage the service."
@@ -237,11 +192,6 @@ variable "vpc_private_subnet_ids" {
   type        = list(string)
   default     = []
 }
-/* variable "public_subnets" {
-  description = ""
-  type        = list(string)
-  default     = []
-} */
 
 variable "service_port" {
   description = ""
@@ -264,8 +214,60 @@ variable "env_variables" {
 }
 
 
+variable "task_memory"{}
+variable "task_cpu"{}
+
+
 variable "tags" {
   default     = {}
   type        = map(string)
   description = "A mapping of tags to assign to all resources."
+}
+
+# ------------------------------------------------
+# Cloudwatch & Autoscalkling related Variables   -
+#-------------------------------------------------
+variable "max_cpu_threshold" {
+  description = "Threshold for max CPU usage"
+  default     = "85"
+  type        = string
+}
+variable "min_cpu_threshold" {
+  description = "Threshold for min CPU usage"
+  default     = "10"
+  type        = string
+}
+
+variable "max_cpu_evaluation_period" {
+  description = "The number of periods over which data is compared to the specified threshold for max cpu metric alarm"
+  default     = "1"
+  type        = string
+}
+variable "min_cpu_evaluation_period" {
+  description = "The number of periods over which data is compared to the specified threshold for min cpu metric alarm"
+  default     = "1"
+  type        = string
+}
+
+variable "max_cpu_period" {
+  description = "The period in seconds over which the specified statistic is applied for max cpu metric alarm"
+  default     = "60"
+  type        = string
+}
+variable "min_cpu_period" {
+  description = "The period in seconds over which the specified statistic is applied for min cpu metric alarm"
+  default     = "60"
+  type        = string
+}
+
+variable "scale_target_max_capacity" {
+  description = "The max capacity of the scalable target"
+  default     = 5
+  type        = number
+}
+
+variable "scale_target_min_capacity" {
+  description = "The min capacity of the scalable target"
+  default     = 1
+  type        = number
 }

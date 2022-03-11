@@ -30,9 +30,6 @@ data "terraform_remote_state" "network" {
 module "ecs_service" {
   source = "../../../modules/ecs-service"
 
-#  vpc_id              = data.terraform_remote_state.network.outputs.vpc["vpc_id"]
-#  private_subnets  = data.terraform_remote_state.network.outputs.vpc["private_subnet_ids"]
-#  public_subnets   = data.terraform_remote_state.network.outputs.vpc["public_subnet_ids"]
 
   region = var.region
   deployment_identifier = "dev"
@@ -44,6 +41,7 @@ module "ecs_service" {
   vpc_id = data.terraform_remote_state.network.outputs.vpc["vpc_id"]
   vpc_private_subnet_ids = data.terraform_remote_state.network.outputs.vpc["private_subnet_ids"]
 
+# Service and Task related inputs ##############################
   service_name = "${var.service_name}"
   service_image = "${var.service_image_repo}:${var.service_image_tag}"
   service_command = "${var.service_command}"
@@ -52,8 +50,17 @@ module "ecs_service" {
   service_deployment_minimum_healthy_percent = "${var.service_deployment_minimum_healthy_percent}"
   service_role = "${var.service_role}"
   service_volumes = var.service_volumes
+  task_cpu = var.task_cpu
+  task_memory = var.task_memory
   ecs_cluster_id = "${var.ecs_cluster_id}"
   env_variables = "${var.env_variables}"
 
+#  Autoscalling related inputs
+  scale_target_max_capacity = "${var.scale_target_max_capacity}"
+  scale_target_min_capacity = "${var.scale_target_min_capacity}"
+  min_cpu_threshold         = "${var.min_cpu_threshold}"
+  max_cpu_threshold         = "${var.max_cpu_threshold}"
+
+# Just TAGS
   tags = "${var.tags}"
 }
