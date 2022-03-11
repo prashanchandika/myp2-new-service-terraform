@@ -2,8 +2,8 @@
 # AWS Auto Scaling - Scaling Up Policy
 #------------------------------------------------------------------------------
 resource "aws_appautoscaling_policy" "scale_up_policy" {
-  name               = "${var.service_name}-scale-up-policy"
-  depends_on         = [aws_appautoscaling_target.scale_target]
+  name               = "${var.service_name}-${var.deployment_identifier}-scale-up-policy"
+  depends_on         = [aws_appautoscaling_target.scale_target, aws_ecs_service.service1]
   service_namespace  = "ecs"
   resource_id        = "service/${var.ecs_cluster_id}/${var.service_name}"
   scalable_dimension = "ecs:service:DesiredCount"
@@ -35,7 +35,7 @@ resource "aws_appautoscaling_policy" "scale_up_policy" {
 # AWS Auto Scaling - Scaling Down Policy
 #------------------------------------------------------------------------------
 resource "aws_appautoscaling_policy" "scale_down_policy" {
-  name               = "${var.service_name}-scale-down-policy"
+  name               = "${var.service_name}-${var.deployment_identifier}-scale-down-policy"
   depends_on         = [aws_appautoscaling_target.scale_target, aws_ecs_service.service1]
   service_namespace  = "ecs"
   resource_id        = "service/${var.ecs_cluster_id}/${var.service_name}"
@@ -51,6 +51,27 @@ resource "aws_appautoscaling_policy" "scale_down_policy" {
   }
 
 }
+
+# Memory Scalling Plan -------------------------------
+resource "aws_appautoscaling_policy" "ecs_memory_scalling" {
+  name               = "${var.service_name}-${var.deployment_identifier}-memory-scaling-policy"
+  depends_on         = [aws_appautoscaling_target.scale_target, aws_ecs_service.service1]
+  policy_type        = "TargetTrackingScaling"
+  resource_id        = "service/${var.ecs_cluster_id}/${var.service_name}"
+  scalable_dimension = "ecs:service:DesiredCount"
+  service_namespace  = "ecs"
+
+  target_tracking_scaling_policy_configuration {
+    predefined_metric_specification {
+      predefined_metric_type = "ECSServiceAverageMemoryUtilization"
+    }
+    target_value = var.memory_scale_target_value
+  }
+  
+}
+
+
+# -------------------------------
 
 #------------------------------------------------------------------------------
 # AWS Auto Scaling - Scaling Target

@@ -36,10 +36,11 @@ env_variables=[
       ]
 
 # Autoscalling related variables
-scale_target_max_capacity=5
+scale_target_max_capacity=4
 scale_target_min_capacity=1
 min_cpu_threshold=20
 max_cpu_threshold=40
+memory_scale_target_value=40
 
 tags = {
     mdo-application-name = "MYP2"

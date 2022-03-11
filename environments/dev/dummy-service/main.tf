@@ -60,6 +60,7 @@ module "ecs_service" {
   scale_target_min_capacity = "${var.scale_target_min_capacity}"
   min_cpu_threshold         = "${var.min_cpu_threshold}"
   max_cpu_threshold         = "${var.max_cpu_threshold}"
+  memory_scale_target_value = "${var.memory_scale_target_value}"
 
 # Just TAGS
   tags = "${var.tags}"

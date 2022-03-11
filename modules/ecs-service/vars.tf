@@ -271,3 +271,9 @@ variable "scale_target_min_capacity" {
   default     = 1
   type        = number
 }
+
+variable "memory_scale_target_value" {
+  description = "The period in seconds over which the specified statistic is applied for max cpu metric alarm"
+  default     = "40"
+  type        = string
+}
