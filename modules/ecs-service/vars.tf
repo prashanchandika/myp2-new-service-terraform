@@ -198,6 +198,13 @@ variable "service_port" {
   type        = string
   default     = ""
 }
+
+variable "listener_port" {
+  description = ""
+  type        = string
+  default     = ""
+}
+
 variable "alb_arn" {
   description = ""
   type        = string

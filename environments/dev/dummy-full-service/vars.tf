@@ -3,7 +3,7 @@ variable "region" {
   type        = string
 }
 
-
+# ECS #############################################
 variable "deployment_identifier" {
   description = "An identifier for this instantiation."
   type        = string
@@ -29,6 +29,13 @@ variable "service_name" {
   description = "The name of the service being created."
   type        = string
 }
+
+variable "rds_name" {
+  description = "The name of the service being created."
+  type        = string
+}
+
+
 variable "service_image" {
   description = "The docker image (including version) to deploy."
   default     = ""
@@ -273,7 +280,7 @@ variable "env_variables"{
 
 
 
-# Autoscalling Related Variables ################################################3
+# Autoscalling Related Variables 
 
 variable "max_cpu_threshold" {
   description = "Threshold for max CPU usage"
@@ -324,4 +331,71 @@ variable "memory_scale_target_value" {
   description = "The period in seconds over which the specified statistic is applied for max cpu metric alarm"
   default     = "40"
   type        = string
+}
+#############################################
+
+# RDS ######################################################
+variable "allocated_storage"{
+
+}
+
+variable "engine"{
+    type = string
+}
+
+variable "engine_version"{
+    type = string
+    default = ""
+}
+
+variable "instance_class"{
+    type = string
+}
+
+
+
+variable "username"{
+    type = string
+}
+
+variable "password"{
+    type = string
+}
+
+variable "skip_final_snapshot"{
+    type = bool
+    default = true
+}
+
+variable "publicly_accessible"{
+    type = bool
+    default = true
+}
+
+
+variable "db_subnet_ids"{
+    type    = list(string)
+    default = []
+}
+
+variable "db_port" {
+  type    = string
+  default = "5432"
+}
+
+variable "parameter_group_name" {
+  type    = string
+  default = "default.postgres12"
+}
+
+# ECR #################################
+variable "ecr_name"{
+  type        = string
+  description = "Name for the ECR"
+  default     = ""
+}
+variable "scan_on_push"{
+  type        = bool
+  description = ""
+  default     = false
 }

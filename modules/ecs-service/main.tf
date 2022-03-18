@@ -31,16 +31,16 @@ resource "aws_ecs_service" "service1" {
 # ALB
 
 resource "aws_alb_listener" "lis1" {
-#  load_balancer_arn = aws_alb.alb1.id
   load_balancer_arn = "${var.alb_arn}"
-  port              = "${var.service_port}"
-#  protocol          = "HTTP"
+  port              = "${var.listener_port}"
   protocol          = "${var.listener_protocol}"
 
   default_action {
     target_group_arn = aws_alb_target_group.tg1.id
     type             = "forward"
   }
+
+  depends_on      = [aws_alb_target_group.tg1]
 }
 
 # Target group

@@ -1,28 +1,26 @@
 region="us-east-2"
 
-service_name="dummy-service-tftest"
-service_image_repo="936341724687.dkr.ecr.us-east-2.amazonaws.com/dummyrepotf"
-service_image_tag="v1"
+deployment_identifier="dev"
+
+service_name="dummy-frontend"
+service_image_repo="936341724687.dkr.ecr.us-east-2.amazonaws.com/myp2-frontend-dev"
+service_image_tag="v4018"
 
 tg_port="80" # Target group port
 service_port="3000" # Container Port
+listener_port="4000"
 service_command=[]
 service_desired_count="1"
 service_deployment_maximum_percent="50"
 service_deployment_minimum_healthy_percent="200"
-alb_arn="arn:aws:elasticloadbalancing:us-east-2:936341724687:loadbalancer/app/myp2-test-internal-alb/7a51f868ec11e1f6"
+alb_arn="arn:aws:elasticloadbalancing:us-east-2:936341724687:loadbalancer/app/myp2-test-alb/71515ebbb0792fed"
 ecs_cluster_id="myp2-test2-cluster"
 listener_protocol="HTTP"
+
 task_cpu=1024
 task_memory=2048
-/* service_volumes=[
-    {
-      name = "data"
-    }
-  ] */
 
-deployment_identifier="dev"
-container_port="3999"
+
 
 env_variables=[
         {

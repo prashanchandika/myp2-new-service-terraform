@@ -17,6 +17,7 @@ variable "instance_class"{
 
 variable "rds_name"{
     type = string
+    default = "testrds"
 }
 
 variable "identifier"{
