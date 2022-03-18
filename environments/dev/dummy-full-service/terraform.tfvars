@@ -1,8 +1,8 @@
 region="us-east-2"
 
 service_name="dummy-full-service"
-service_image_repo="936341724687.dkr.ecr.us-east-2.amazonaws.com/myp2-backend-emails-dev"
-service_image_tag="v27"
+service_image_repo="936341724687.dkr.ecr.us-east-2.amazonaws.com/myp2-backend-emails-dev" # image url created by module ecr is used by default. Change main.tf to use this url if requires. 
+service_image_tag="v1"
 
 deployment_identifier="dev"
 
