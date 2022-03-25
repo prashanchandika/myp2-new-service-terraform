@@ -2,11 +2,14 @@ variable "region" {
   description = "The region into which to deploy the service."
   type        = string
 }
-variable "vpc_id" {
-  description = "The ID of the VPC into which to deploy the service."
+
+variable "product" {
+  description = "The name of the produce eg: myp2."
   type        = string
 }
 
+
+# ECS #############################################
 variable "deployment_identifier" {
   description = "An identifier for this instantiation."
   type        = string
@@ -19,7 +22,7 @@ variable "service_task_container_definitions" {
 }
 variable "service_task_network_mode" {
   description = "The network mode used for the containers in the task."
-  default     = "awsvpc"
+  default     = ""
   type        = string
 }
 variable "service_task_pid_mode" {
@@ -32,7 +35,24 @@ variable "service_name" {
   description = "The name of the service being created."
   type        = string
 }
+
+variable "rds_name" {
+  description = "The name of the service being created."
+  type        = string
+}
+
+
 variable "service_image" {
+  description = "The docker image (including version) to deploy."
+  default     = ""
+  type        = string
+}
+variable "service_image_repo" {
+  description = "The docker image (including version) to deploy."
+  default     = ""
+  type        = string
+}
+variable "service_image_tag" {
   description = "The docker image (including version) to deploy."
   default     = ""
   type        = string
@@ -42,13 +62,18 @@ variable "service_command" {
   type        = list(string)
   default     = []
 }
-
-
-variable "service_desired_count" {
-  description = "The desired number of tasks in the service."
-  type        = number
-  default     = 3
+variable "service_port" {
+  description = "The port the containers will be listening on."
+  type        = string
+  default     = ""
 }
+
+variable "listener_port" {
+  description = ""
+  type        = string
+  default     = ""
+}
+
 variable "service_deployment_maximum_percent" {
   description = "The maximum percentage of the desired count that can be running."
   type        = number
@@ -65,6 +90,9 @@ variable "service_health_check_grace_period_seconds" {
   default     = 0
 }
 
+variable "task_memory"{}
+variable "task_cpu"{}
+
 variable "attach_to_load_balancer" {
   description = "Whether or not this service should attach to a load balancer (\"yes\" or \"no\")."
   type        = string
@@ -75,13 +103,6 @@ variable "service_elb_name" {
   type        = string
   default     = ""
 }
-
-variable "tg_name" {
-  description = "target group to attach with ecs service"
-  type        = string
-  default     = ""
-}
-
 variable "target_group_arn" {
   description = "The arn of the target group to point at the service containers."
   type        = string
@@ -95,7 +116,7 @@ variable "target_container_name" {
 variable "tg_port" {
   description = "The port to which the load balancer should route traffic. Defaults to the service_port."
   type        = string
-  default     = ""
+  default     = "80"
 }
 
 variable "register_in_service_discovery" {
@@ -134,30 +155,58 @@ variable "service_discovery_container_port" {
   default     = ""
 }
 
-
-variable "service_role" {
-  description = "The ARN of the service task role to use."
+variable "associate_default_security_group" {
+  description = "Whether or not to create and associate a default security group for the tasks created by this service (\"yes\" or \"no\"). Defaults to \"yes\". Only applicable when service_task_network_mode is \"awsvpc\"."
   type        = string
-  default     = "AWSServiceRoleForECS"
+  default     = "yes"
 }
+variable "include_default_ingress_rule" {
+  description = "Whether or not to include the defauregionlt ingress rule in the default security group for the tasks created by this service (\"yes\" or \"no\"). Defaults to \"yes\". Only applicable when service_task_network_mode is \"awsvpc\"."
+  type        = string
+  default     = "yes"
+}
+variable "include_default_egress_rule" {
+  description = "Whether or not to include the default egress rule in the default security group for the tasks created by this service (\"yes\" or \"no\"). Defaults to \"yes\". Only applicable when service_task_network_mode is \"awsvpc\"."
+  type        = string
+  default     = "yes"
+}
+variable "default_security_group_ingress_cidrs" {
+  description = "The CIDRs allowed access to containers when using the default security group."
+  type        = list(string)
+  default     = ["10.0.0.0/8"]
+}
+variable "default_security_group_egress_cidrs" {
+  description = "The CIDRs accessible from containers when using the default security group."
+  type        = list(string)
+  default     = ["0.0.0.0/0"]
+}
+
 variable "service_volumes" {
   description = "A list of volumes to make available to the containers in the service."
   type        = list(map(string))
   default     = []
 }
 
+variable "scheduling_strategy" {
+  description = "The scheduling strategy to use for this service (\"REPLICA\" or \"DAEMON\")."
+  type        = string
+  default     = "REPLICA"
+}
 
-variable "ecs_cluster_id" {
+variable "placement_constraints" {
+  description = "A list of placement constraints for the service."
+  type        = list(map(string))
+  default     = []
+}
+
+/* variable "ecs_cluster_id" {
   description = "The ID of the ECS cluster in which to deploy the service."
   type        = string
-}
-
-
-variable "ecsTaskExecutionRole_arn" {
+} */
+/* variable "ecs_cluster_service_role_arn" {
   description = "The ARN of the IAM role to provide to ECS to manage the service."
   type        = string
-  default     = "arn:aws:iam::936341724687:role/ecsTaskExecutionRole"
-}
+} */
 
 variable "include_log_group" {
   description = "Whether or not to create a log group for the service (\"yes\" or \"no\"). Defaults to \"yes\"."
@@ -171,40 +220,45 @@ variable "log_group_retention" {
   default     = 0
 }
 
-/* variable "force_new_deployment" {
+variable "force_new_deployment" {
   description = "Whether or not to force a new deployment of the service (\"yes\" or \"no\"). Defaults to \"no\"."
   type        = string
   default     = "no"
-} */
+}
 
-variable "desired_count" {
+variable "service_desired_count" {
   description = ""
   type        = string
   default     = "1"
 }
 
-variable "internal" {
-  default = true
-}
-
-variable "vpc_private_subnet_ids" {
+variable "container_port" {
   description = ""
-  type        = list(string)
-  default     = []
+  type        = string
+  default     = "3999"
 }
 
-variable "service_port" {
+variable "tags" {
+  default     = {}
+  type        = map(string)
+  description = "A mapping of tags to assign to all resources."
+}
+variable "tg_name" {
   description = ""
   type        = string
   default     = ""
 }
 
-variable "listener_port" {
+variable "ecs_cluster_id" {
   description = ""
   type        = string
   default     = ""
 }
-
+variable "service_role" {
+  description = ""
+  type        = string
+  default     = "arn:aws:iam::936341724687:role/aws-service-role/ecs.amazonaws.com/AWSServiceRoleForECS"
+}
 variable "alb_arn" {
   description = ""
   type        = string
@@ -216,24 +270,24 @@ variable "listener_protocol" {
   default     = ""
 }
 
-variable "env_variables" {
-  
+variable "env_variables"{
+  default = [
+        {
+          "name": "ENV1",
+          "value": "80"
+        },
+        {
+          "name": "ENV2",
+          "value": "xxxxx"
+        }
+      ]
+
 }
 
 
-variable "task_memory"{}
-variable "task_cpu"{}
 
+# Autoscalling Related Variables 
 
-variable "tags" {
-  default     = {}
-  type        = map(string)
-  description = "A mapping of tags to assign to all resources."
-}
-
-# ------------------------------------------------
-# Cloudwatch & Autoscalkling related Variables   -
-#-------------------------------------------------
 variable "max_cpu_threshold" {
   description = "Threshold for max CPU usage"
   default     = "85"
@@ -247,12 +301,12 @@ variable "min_cpu_threshold" {
 
 variable "max_cpu_evaluation_period" {
   description = "The number of periods over which data is compared to the specified threshold for max cpu metric alarm"
-  default     = "1"
+  default     = "3"
   type        = string
 }
 variable "min_cpu_evaluation_period" {
   description = "The number of periods over which data is compared to the specified threshold for min cpu metric alarm"
-  default     = "1"
+  default     = "3"
   type        = string
 }
 
@@ -283,4 +337,71 @@ variable "memory_scale_target_value" {
   description = "The period in seconds over which the specified statistic is applied for max cpu metric alarm"
   default     = "40"
   type        = string
+}
+#############################################
+
+# RDS ######################################################
+variable "allocated_storage"{
+
+}
+
+variable "engine"{
+    type = string
+}
+
+variable "engine_version"{
+    type = string
+    default = ""
+}
+
+variable "instance_class"{
+    type = string
+}
+
+
+
+variable "username"{
+    type = string
+}
+
+variable "password"{
+    type = string
+}
+
+variable "skip_final_snapshot"{
+    type = bool
+    default = true
+}
+
+variable "publicly_accessible"{
+    type = bool
+    default = true
+}
+
+
+variable "db_subnet_ids"{
+    type    = list(string)
+    default = []
+}
+
+variable "db_port" {
+  type    = string
+  default = "5432"
+}
+
+variable "parameter_group_name" {
+  type    = string
+  default = "default.postgres12"
+}
+
+# ECR #################################
+variable "ecr_name"{
+  type        = string
+  description = "Name for the ECR"
+  default     = ""
+}
+variable "scan_on_push"{
+  type        = bool
+  description = ""
+  default     = false
 }

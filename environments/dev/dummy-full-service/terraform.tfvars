@@ -1,11 +1,6 @@
-region="us-east-2"
-
 service_name="dummy-full-service"
 service_image_repo="936341724687.dkr.ecr.us-east-2.amazonaws.com/myp2-backend-emails-dev" # image url created by module ecr is used by default. Change main.tf to use this url if requires. 
 service_image_tag="v1"
-
-deployment_identifier="dev"
-
 
 tg_port="80" # Target group port
 service_port="8003" # Container Port
@@ -17,7 +12,6 @@ service_deployment_minimum_healthy_percent="200"
 alb_arn="arn:aws:elasticloadbalancing:us-east-2:936341724687:loadbalancer/app/myp2-test-internal-alb/7a51f868ec11e1f6"
 ecs_cluster_id="myp2-test2-cluster"
 listener_protocol="HTTP"
-
 
 task_cpu=1024
 task_memory=2048
@@ -85,8 +79,4 @@ scan_on_push=false
 ##########################
 
 # TAGS
-tags = {
-    mdo-application-name = "MYP2"
-    mdo-environment = "DEV"
-    mdo-creator = "Prashan"
-  }
+# Refer to general.tfvars in environment directory
