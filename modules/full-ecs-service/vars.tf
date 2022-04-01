@@ -360,7 +360,7 @@ variable "memory_scale_target_value" {
 
 # RDS ######################################################
 variable "allocated_storage"{
-
+  default = 10
 }
 
 variable "engine"{

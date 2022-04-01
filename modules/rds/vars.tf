@@ -1,4 +1,5 @@
 variable "allocated_storage"{
+  default = 10
 
 }
 
