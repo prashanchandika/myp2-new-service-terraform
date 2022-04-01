@@ -3,7 +3,7 @@ service_image_tag="v1"
 
 service_port="8003" # Container Port
 listener_port="8003"
-external_service=false
+external_service=true
 
 env_variables=[
         {
@@ -35,10 +35,6 @@ env_variables=[
           "value": "dsfjjrfioerfenrferfe9ur3409rum438r34g7rcmg47r64ghr895th54th5mtyy5p60y6my89ch4hreure"
         }
       ]
-
-
-
-
 
 #RDS ################
 rds_name="dummyfullservicerds"
