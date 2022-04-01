@@ -1,25 +1,9 @@
 service_name="dummy-full-service"
-service_image_repo="936341724687.dkr.ecr.us-east-2.amazonaws.com/myp2-backend-emails-dev" # image url created by module ecr is used by default. Change main.tf to use this url if requires. 
 service_image_tag="v1"
 
-tg_port="80" # Target group port
 service_port="8003" # Container Port
 listener_port="8003"
-service_command=[]
-service_desired_count="1"
-service_deployment_maximum_percent="50"
-service_deployment_minimum_healthy_percent="200"
-alb_arn="arn:aws:elasticloadbalancing:us-east-2:936341724687:loadbalancer/app/myp2-test-internal-alb/7a51f868ec11e1f6"
-ecs_cluster_id="myp2-test2-cluster"
-listener_protocol="HTTP"
-
-task_cpu=1024
-task_memory=2048
-/* service_volumes=[
-    {
-      name = "data"
-    }
-  ] */
+external_service=false
 
 env_variables=[
         {
@@ -52,12 +36,7 @@ env_variables=[
         }
       ]
 
-# Autoscalling related variables
-scale_target_max_capacity=5
-scale_target_min_capacity=1
-min_cpu_threshold=20
-max_cpu_threshold=40
-memory_scale_target_value=40
+
 
 
 
@@ -70,13 +49,5 @@ instance_class="db.t3.micro"
 username="root"
 password="Mydo1234"
 parameter_group_name="default.postgres12"
-skip_final_snapshot=true
 db_port="5432"
 #################
-
-# ECR ##############
-scan_on_push=false
-##########################
-
-# TAGS
-# Refer to general.tfvars in environment directory

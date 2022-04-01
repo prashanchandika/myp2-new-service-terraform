@@ -82,7 +82,7 @@ variable "service_deployment_maximum_percent" {
 variable "service_deployment_minimum_healthy_percent" {
   description = "The minimum healthy percentage of the desired count to keep running."
   type        = number
-  default     = 50
+  default     = 200
 }
 variable "service_health_check_grace_period_seconds" {
   description = "The number of seconds to wait for the service to start up before starting load balancer health checks."
@@ -90,8 +90,12 @@ variable "service_health_check_grace_period_seconds" {
   default     = 0
 }
 
-variable "task_memory"{}
-variable "task_cpu"{}
+variable "task_memory"{
+  default = 2048
+}
+variable "task_cpu"{
+  default = 1024
+}
 
 variable "attach_to_load_balancer" {
   description = "Whether or not this service should attach to a load balancer (\"yes\" or \"no\")."
@@ -259,11 +263,25 @@ variable "service_role" {
   type        = string
   default     = "arn:aws:iam::936341724687:role/aws-service-role/ecs.amazonaws.com/AWSServiceRoleForECS"
 }
-variable "alb_arn" {
+variable "internal_alb_arn" {
   description = ""
   type        = string
   default     = ""
 }
+
+variable "external_alb_arn" {
+  description = ""
+  type        = string
+  default     = ""
+}
+
+variable "external_service" {
+  description = "if the service should be attached to the internal facing alb"
+  type        = bool
+  default = false
+}
+
+
 variable "listener_protocol" {
   description = ""
   type        = string
@@ -290,12 +308,12 @@ variable "env_variables"{
 
 variable "max_cpu_threshold" {
   description = "Threshold for max CPU usage"
-  default     = "85"
+  default     = "50"
   type        = string
 }
 variable "min_cpu_threshold" {
   description = "Threshold for min CPU usage"
-  default     = "10"
+  default     = "20"
   type        = string
 }
 

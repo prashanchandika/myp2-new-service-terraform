@@ -38,7 +38,8 @@ module "ecs_service" {
 
   region = var.region
   deployment_identifier = "dev"
-  alb_arn = "${var.alb_arn}"
+#  alb_arn = "${var.alb_arn}"
+  alb_arn = var.external_service ? var.external_alb_arn : var.internal_alb_arn
   tg_name = "${var.service_name}-tftg"
   tg_port = "${var.tg_port}"
   service_port = "${var.service_port}"
