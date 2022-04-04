@@ -8,7 +8,7 @@ external_service=false
 #RDS ################
 rds_name="dummyfullservicerds"
 engine="postgres"
-engine_version="12.7"
+/* engine_version="12.7"
 instance_class="db.t3.micro"
-parameter_group_name="default.postgres12"
+parameter_group_name="default.postgres12" */
 #################

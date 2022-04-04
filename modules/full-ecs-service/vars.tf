@@ -369,11 +369,12 @@ variable "engine"{
 
 variable "engine_version"{
     type = string
-    default = ""
+    default = "12.7"
 }
 
 variable "instance_class"{
     type = string
+    default ="db.t3.micro"
 }
 
 

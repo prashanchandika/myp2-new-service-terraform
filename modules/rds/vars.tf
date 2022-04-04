@@ -5,15 +5,17 @@ variable "allocated_storage"{
 
 variable "engine"{
     type = string
+    default = "postgres"
 }
 
 variable "engine_version"{
     type = string
-    default = ""
+    default = "12.7"
 }
 
 variable "instance_class"{
     type = string
+    default ="db.t3.micro"
 }
 
 variable "rds_name"{
@@ -66,7 +68,7 @@ variable "db_port" {
 
 variable "parameter_group_name" {
   type    = string
-  default = ""
+  default = "default.postgres12"
 }
  
 variable "tags" {
