@@ -1,4 +1,6 @@
 resource "aws_db_instance" "rds1" {
+  count      = var.create_rds ? 1 : 0
+
   allocated_storage   = var.allocated_storage
   engine              = var.engine
   engine_version      = var.engine_version
@@ -11,14 +13,15 @@ resource "aws_db_instance" "rds1" {
   skip_final_snapshot = var.skip_final_snapshot
 
   publicly_accessible = var.publicly_accessible
-  db_subnet_group_name = aws_db_subnet_group.subnet_rds.id
-#  security_group_names = [aws_security_group.nsg_rds.id]
-  vpc_security_group_ids = [aws_security_group.nsg_rds.id]
+  db_subnet_group_name = aws_db_subnet_group.subnet_rds.0.id
+  vpc_security_group_ids = [aws_security_group.nsg_rds.0.id]
   tags                = var.tags
 }
 
 
 resource "aws_db_subnet_group" "subnet_rds" {
+  count      = var.create_rds ? 1 : 0
+  
   name       = "${var.rds_name}-${var.deployment_identifier}-subnetgroup"
   subnet_ids = var.db_subnet_ids
 
@@ -27,6 +30,8 @@ resource "aws_db_subnet_group" "subnet_rds" {
 
 #Security Group for RDS
 resource "aws_security_group" "nsg_rds" {
+  count       = var.create_rds ? 1 : 0
+
   name        = "${var.rds_name}-${var.deployment_identifier}-sg"
   description = "Allow connections on DB Port"
   vpc_id      = var.vpc_id
@@ -35,6 +40,8 @@ resource "aws_security_group" "nsg_rds" {
 }
 
 resource "aws_security_group_rule" "nsg_rds_ingress_rule" {
+  count      = var.create_rds ? 1 : 0
+
   description              = "Allow connections on DB Port"
   type                     = "ingress"
   from_port                = "${var.db_port}"
@@ -42,10 +49,12 @@ resource "aws_security_group_rule" "nsg_rds_ingress_rule" {
   protocol                 = "tcp"
 #  source_security_group_id = aws_security_group.nsg_task.id
   cidr_blocks              =  ["0.0.0.0/0"]
-  security_group_id = aws_security_group.nsg_rds.id
+  security_group_id = aws_security_group.nsg_rds.0.id
 }
 
 resource "aws_security_group_rule" "nsg_rds_egress_rule" {
+  count      = var.create_rds ? 1 : 0
+
   description              = "Allow connections on DB Port"
   type                     = "egress"
   from_port                = 0
@@ -53,5 +62,5 @@ resource "aws_security_group_rule" "nsg_rds_egress_rule" {
   protocol                 = -1
 #  source_security_group_id = aws_security_group.nsg_task.id
   cidr_blocks              =  ["0.0.0.0/0"]
-  security_group_id = aws_security_group.nsg_rds.id
+  security_group_id = aws_security_group.nsg_rds.0.id
 }

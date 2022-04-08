@@ -359,12 +359,18 @@ variable "memory_scale_target_value" {
 #############################################
 
 # RDS ######################################################
+variable "create_rds" {
+  default = false
+}
+
+
 variable "allocated_storage"{
   default = 10
 }
 
 variable "engine"{
     type = string
+    default = "postgres"
 }
 
 variable "engine_version"{

@@ -3,6 +3,11 @@ variable "allocated_storage"{
 
 }
 
+variable "create_rds" {
+  type = bool
+  default = false
+}
+
 variable "engine"{
     type = string
     default = "postgres"

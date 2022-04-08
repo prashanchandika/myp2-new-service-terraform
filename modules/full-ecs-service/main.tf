@@ -77,6 +77,7 @@ module "ecs_service" {
 
 module "rds"{
     source              =   "../rds"
+    create_rds          = var.create_rds
     allocated_storage   = var.allocated_storage
     engine              = var.engine
     engine_version      = var.engine_version
