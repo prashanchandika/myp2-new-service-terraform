@@ -14,9 +14,9 @@ include {
   path = find_in_parent_folders()
 }
 
-/* dependencies {
-  paths = ["../ecs", "../iam", "../phpfpm", "../elasticsearch", "../rabbitmq", "../redis"]
-} */
+dependencies {
+  paths = ["../network"]
+}
 
 inputs = merge(
   jsondecode(
