@@ -12,8 +12,8 @@ myp2_env: &myp2_env
 
 version: 2.1
 orbs: 
-  terragrunt: dialogue/terragrunt@1.5.2
   aws-cli: circleci/aws-cli@1.3
+  github-cli: circleci/github-cli@2.1.0
 
 parameters:
   is_pull_request:
@@ -36,12 +36,38 @@ workflows:
       or:
         - equal: [ true, << pipeline.parameters.is_pull_request >> ]
     jobs:
-      - terragrunt/validate:
-          terraform_version: 1.1.7
-          terragrunt_version: 0.36.3
+      - validate-tf:
+          myp2_env: 'dev'
+          context: MYP2
+
+# Jobs
+jobs:
 
 
+  validate-tf:
+    parameters:
+      <<: *myp2_env
+    <<: *docker_cimg
+    steps:
+      - run:
+          name: get-tfenv
+          command: git clone https://github.com/tfutils/tfenv.git ~/.tfenv
+      - run:
+          name: setpath-tfenv
+          command: echo 'export PATH="$HOME/.tfenv/bin:$PATH"' >> ~/.bash_profile && source ~/.bash_profile
+      - run:
+          name: install-tfenv
+          command: tfenv install 1.1.7 && tfenv use 1.1.7
+      - run:
+          name: install-terragrunt
+          command: wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.36.3/terragrunt_linux_arm64 && mv terragrunt /usr/local/bin/terragrunt
+      - run:
+          name: show-versions
+          command: terraform -v &&  terragrunt -v
+      - checkout
+      - aws-cli/setup
+      - run:
+          name: validate-tf
+          command: cd ~/terraform/environments/parameters.myp2_env/ && terragrunt run-all validate
 
-
-
-
+ 
