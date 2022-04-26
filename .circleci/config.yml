@@ -68,6 +68,6 @@ jobs:
       - aws-cli/setup
       - run:
           name: validate-tf
-          command: cd ~/terraform/environments/parameters.myp2_env/ && ~/terraform/terragrunt/terragrunt run-all validate
+          command: cd ~/terraform/environments/< parameters.myp2_env >>/ && ~/terraform/terragrunt/terragrunt run-all validate
 
  
