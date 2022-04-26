@@ -54,7 +54,7 @@ jobs:
           command: git clone https://github.com/tfutils/tfenv.git ~/.tfenv
       - run:
           name: install-tfenv
-          command: $HOME/.tfenv/bin/tfenv install 1.1.7 && $HOME/.tfenv/bin/tfenv use 1.1.7
+          command: $HOME/.tfenv/bin/tfenv install 1.1.7 && $HOME/.tfenv/bin/tfenv use 1.1.7 && terraform -v
       - run:
           name: install-terragrunt
           command: wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.36.3/terragrunt_linux_arm64 && sudo mv terragrunt_linux_arm64 terragrunt && chmod +x terragrunt
