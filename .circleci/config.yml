@@ -69,8 +69,7 @@ jobs:
       - run:
           name: validate-tf
           command: cd ~/terraform/environments/<< parameters.myp2_env >>/ && terragrunt run-all validate
-
-      - plan:
+      - run:
           name: plan-tf
           command: cd ~/terraform/environments/<< parameters.myp2_env >>/ && terragrunt run-all plan
 
