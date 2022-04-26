@@ -57,7 +57,7 @@ jobs:
           command: echo 'export PATH="$HOME/.tfenv/bin:$PATH"' >> ~/.bash_profile && source ~/.bash_profile
       - run:
           name: install-tfenv
-          command: "$HOME/.tfenv/bin/tfenv install 1.1.7 && $HOME/.tfenv/bin/tfenv use 1.1.7
+          command: $HOME/.tfenv/bin/tfenv install 1.1.7 && $HOME/.tfenv/bin/tfenv use 1.1.7
       - run:
           name: install-terragrunt
           command: wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.36.3/terragrunt_linux_arm64 && mv terragrunt /usr/local/bin/terragrunt
