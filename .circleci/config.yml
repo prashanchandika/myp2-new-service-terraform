@@ -60,7 +60,7 @@ jobs:
           command: tfenv install 1.1.7 && tfenv use 1.1.7
       - run:
           name: install-terragrunt
-          command: wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.36.3/terragrunt_linux_amd64 && mv terragrunt_linux_amd64  ~/terraform/terragrunt && chmod +x ~/terraform/terragrunt
+          command: wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.36.3/terragrunt_linux_amd64 && mv terragrunt_linux_amd64  ~/tg-binary/terragrunt && chmod +x ~/tg-binary/terragrunt && echo 'export PATH="~/tg-binary/:$PATH"' >> $BASH_ENV
       - run:
           name: show-versions
           command: terraform -v &&  ~/terraform/terragrunt -v
