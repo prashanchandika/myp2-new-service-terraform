@@ -63,7 +63,7 @@ jobs:
           command: wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.36.3/terragrunt_linux_amd64 -P ~/tg-binary/ && mv ~/tg-binary/terragrunt_linux_amd64  ~/tg-binary/terragrunt && chmod +x ~/tg-binary/terragrunt && echo 'export PATH="~/tg-binary/:$PATH"' >> $BASH_ENV
       - run:
           name: show-versions
-          command: terraform -v &&  ~/terraform/terragrunt -v
+          command: terraform -v && terragrunt -v
       - checkout
       - aws-cli/setup
       - run:
