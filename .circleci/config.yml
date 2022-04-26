@@ -60,7 +60,7 @@ jobs:
           command: tfenv install 1.1.7 && tfenv use 1.1.7
       - run:
           name: install-terragrunt
-          command: wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.36.3/terragrunt_linux_arm64 && mv terragrunt_linux_arm64  ~/terraform/terragrunt
+          command: wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.36.3/terragrunt_linux_arm64 && mv terragrunt_linux_arm64  ~/terraform/terragrunt && chmod +x ~/terraform/terragrunt
       - run:
           name: show-versions
           command: terraform -v &&  ~/terraform/terragrunt -v
