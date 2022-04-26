@@ -53,18 +53,21 @@ jobs:
           name: get-tfenv
           command: git clone https://github.com/tfutils/tfenv.git ~/.tfenv
       - run:
+          name: setpath-tfenv
+          command: echo 'export PATH="$HOME/.tfenv/bin:$PATH"' >> $BASH_ENV
+      - run:
           name: install-tfenv
-          command: $HOME/.tfenv/bin/tfenv install 1.1.7 && $HOME/.tfenv/bin/tfenv use 1.1.7 && terraform -v
+          command: tfenv install 1.1.7 && tfenv use 1.1.7
       - run:
           name: install-terragrunt
-          command: wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.36.3/terragrunt_linux_arm64 && sudo mv terragrunt_linux_arm64 terragrunt && chmod +x terragrunt
+          command: wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.36.3/terragrunt_linux_arm64 && mv terragrunt_linux_arm64  ~/terraform/terragrunt
       - run:
           name: show-versions
-          command: terraform -v &&  ~/terraform/terragrunt -v
+          command: terraform -v &&  ~/terraform/terragrunt/terragrunt -v
       - checkout
       - aws-cli/setup
       - run:
           name: validate-tf
-          command: cd ~/terraform/environments/parameters.myp2_env/ && ~/terraform/terragrunt run-all validate
+          command: cd ~/terraform/environments/parameters.myp2_env/ && ~/terraform/terragrunt/terragrunt run-all validate
 
  
