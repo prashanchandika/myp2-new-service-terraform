@@ -1,7 +1,7 @@
 docker_cimg: &docker_cimg
     working_directory: ~/terraform
     docker:
-      - image: cimg/base
+      - image: cimg/base:2021.04
 
 myp2_env: &myp2_env
     myp2_env:
