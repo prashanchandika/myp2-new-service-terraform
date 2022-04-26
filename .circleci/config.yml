@@ -57,14 +57,14 @@ jobs:
           command: $HOME/.tfenv/bin/tfenv install 1.1.7 && $HOME/.tfenv/bin/tfenv use 1.1.7
       - run:
           name: install-terragrunt
-          command: wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.36.3/terragrunt_linux_arm64 && mv terragrunt_linux_arm64 /usr/local/bin/terragrunt
+          command: wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.36.3/terragrunt_linux_arm64 && sudo mv terragrunt_linux_arm64 terragrunt && chmod +x terragrunt
       - run:
           name: show-versions
-          command: terraform -v &&  terragrunt -v
+          command: terraform -v &&  ~/terraform/terragrunt -v
       - checkout
       - aws-cli/setup
       - run:
           name: validate-tf
-          command: cd ~/terraform/environments/parameters.myp2_env/ && terragrunt run-all validate
+          command: cd ~/terraform/environments/parameters.myp2_env/ && ~/terraform/terragrunt run-all validate
 
  
