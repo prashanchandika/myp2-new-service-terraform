@@ -91,7 +91,7 @@ jobs:
       - run:
           name: plan-tf
           command: cd ~/terraform/environments/<< parameters.myp2_env >>/ && terragrunt run-all plan
-          
+
   update-infrastructure:
     parameters:
       <<: *myp2_env
@@ -125,6 +125,6 @@ jobs:
           command: git-crypt unlock ~/myp2-newservice-gitcrypt.key
       - run:
           name: validate-tf
-          command: cd ~/terraform/environments/<< parameters.myp2_env >>/ && terragrunt run-all apply
+          command: cd ~/terraform/environments/<< parameters.myp2_env >>/ && echo y | terragrunt run-all apply
 
  
