@@ -68,7 +68,7 @@ jobs:
       - aws-cli/setup
       - run:
           name: install-gitcrypt
-          command: sudo apt install git-crypt
+          command: sudo apt update && apt install git-crypt
       - run:
           name: download-gitcrypt-key
           command: aws s3 cp s3://myp2-git-crypt-keys/myp2-newservice-gitcrypt.key ~/
