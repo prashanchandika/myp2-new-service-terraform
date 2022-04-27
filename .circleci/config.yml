@@ -66,6 +66,15 @@ jobs:
           command: terraform -v && terragrunt -v
       - checkout
       - aws-cli/setup
+      -run:
+          name: install-gitcrypt
+          command: apt install git-crypt
+      -run:
+          name: download-gitcrypt-key
+          command: aws s3 cp s3://myp2-git-crypt-keys/myp2-newservice-gitcrypt.key ~/
+      -run:
+          name: gitcrypt-unlock
+          command: git-crypt unlock ~/myp2-newservice-gitcrypt.key
       - run:
           name: validate-tf
           command: cd ~/terraform/environments/<< parameters.myp2_env >>/ && terragrunt run-all validate
