@@ -35,6 +35,10 @@ workflows:
     unless : 
       or:
         - equal: [ true, << pipeline.parameters.is_pull_request >> ]
+        - equal: [ develop, << pipeline.git.branch >> ]
+        - equal: [ uat, << pipeline.git.branch >> ]
+        - equal: [ master, << pipeline.git.branch >> ]
+        - equal: [ staging, << pipeline.git.branch >> ]
     jobs:
       - validate-tf:
           myp2_env: 'dev'
