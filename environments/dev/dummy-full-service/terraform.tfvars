@@ -7,7 +7,7 @@ external_service=false
 
 #RDS ################
 rds_name="dummyfullservicerds"
-create_rds=false
+create_rds=true
 
 
 
