@@ -124,7 +124,7 @@ jobs:
           name: gitcrypt-unlock
           command: git-crypt unlock ~/myp2-newservice-gitcrypt.key
       - run:
-          name: validate-tf
+          name: apply-tf
           command: cd ~/terraform/environments/<< parameters.myp2_env >>/ && echo y | terragrunt run-all apply
 
  
